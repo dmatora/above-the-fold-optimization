@@ -113,3 +113,4 @@ To be able to generate Critical Path CSS from within the WordPress admin the sof
 = 2.0 =
 The upgrade requires a new configuration of Critical Path CSS. The configuration from version 1.0 will not be preserved.
 
+
