@@ -80,6 +80,9 @@ class Abovethefold_Curl {
 
 		/**
 		 * Follow redirects
+		 *
+		 * Bugreport by drazon
+		 * @link https://wordpress.org/support/topic/php-warning-curl_setopt-open_basedir
 		 */
 		if ($followlocation && !ini_get('open_basedir')) {
 			curl_setopt($this->ch, CURLOPT_MAXREDIRS, $followlocation);

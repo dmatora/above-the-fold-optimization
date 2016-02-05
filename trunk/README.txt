@@ -66,6 +66,7 @@ To be able to generate Critical Path CSS from within the WordPress admin the sof
 
 = 2.3.4 =
 * Removed Node modules (Penthouse.js) to reduce plugin size (install via ``npm install``, see instructions)
+* Bugfix LocalizeJS module (@poundnine)
 
 = 2.3.3 =
 * Bug fixes & improvements (@superpoincare)

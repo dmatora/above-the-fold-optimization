@@ -44,6 +44,7 @@
 	}
 
 ?>
+<?php require_once('admin.author.class.php'); ?>
 <form method="post" action="<?php echo admin_url('admin-post.php?action=abovethefold_extractcss'); ?>" class="clearfix">
 	<?php wp_nonce_field('abovethefold'); ?>
 	<div class="wrap abovethefold-wrapper">
@@ -74,5 +75,3 @@
 		</div> <!-- End of #poststuff -->
 	</div> <!-- End of .wrap .nginx-wrapper -->
 </form>
-
-<?php require_once('admin.author.class.php'); ?>

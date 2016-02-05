@@ -474,6 +474,7 @@ class Abovethefold_Admin {
 		}
 
 		// Get random page
+		$post = false;
 		$args = array( 'post_type' => 'page', 'numberposts' => 1, 'orderby' => 'rand' );
 		query_posts($args);
 		if (have_posts()) {

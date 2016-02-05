@@ -49,3 +49,11 @@ From the `above-the-fold-optimization/` directory:
 3. ``npm install``
 
 To be able to generate Critical Path CSS from within the WordPress admin the software needs to be executable from PHP which may pose a security risk. An alternative option is to generate a CLI command to execute via SSH.
+
+## Maintainers
+
+* [@optimalisatie](https://github.com/optimalisatie)
+
+## License
+
+(C) [www.optimalisatie.nl](https://optimalisatie.nl) 2014–2016, released under the MIT license
