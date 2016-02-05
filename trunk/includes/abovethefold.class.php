@@ -74,6 +74,7 @@ class Abovethefold {
 	 * @access   public
 	 * @var      array
 	 */
+
 	public $options;
 
 	/**

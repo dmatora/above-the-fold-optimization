@@ -11,6 +11,7 @@
  * @subpackage abovethefold/admin
  * @author     Optimalisatie.nl <info@optimalisatie.nl>
  */
+
 class Abovethefold_Critical_Admin {
 
 	/**

@@ -9,6 +9,7 @@
  * @author     Optimalisatie.nl <info@optimalisatie.nl>
  */
 
+
 class Abovethefold_Curl {
 
 	/**

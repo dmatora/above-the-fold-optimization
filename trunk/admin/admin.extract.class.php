@@ -7,6 +7,7 @@
 		'<option value="/">/ - Root</option>'
 	);
 
+
 	// Get random post
 	$args = array( 'post_type' => 'post', 'numberposts' => -1 );
 	query_posts($args);

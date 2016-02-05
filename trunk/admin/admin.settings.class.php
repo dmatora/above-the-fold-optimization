@@ -1,6 +1,7 @@
 
 <?php require_once('admin.author.class.php'); ?>
 
+
 <form method="post" action="<?php echo admin_url('admin-post.php?action=abovethefold_update'); ?>" class="clearfix" style="margin-top:0px;">
 	<?php wp_nonce_field('abovethefold'); ?>
 	<div class="wrap abovethefold-wrapper">

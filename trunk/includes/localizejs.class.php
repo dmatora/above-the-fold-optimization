@@ -10,6 +10,7 @@
  */
 
 
+
 class Abovethefold_LocalizeJS {
 
 	/**
