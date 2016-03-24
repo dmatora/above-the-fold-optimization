@@ -14,12 +14,12 @@
  * Description:       Above the fold optimization to pass the "<em>Eliminate render-blocking JavaScript and CSS in above-the-fold content</em>" rule from Google PageSpeed.
  * Version:           2.3.5
  * Author:            Optimalisatie.nl
- * Author URI:        https://en.optimalisatie.nl/
+ * Author URI:        https://optimalisatie.nl/
  * Text Domain:       abovethefold
  * Domain Path:       /languages
  */
 
-define('WPABOVETHEFOLD_VERSION','2.3.4');
+define('WPABOVETHEFOLD_VERSION','2.3.5');
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
