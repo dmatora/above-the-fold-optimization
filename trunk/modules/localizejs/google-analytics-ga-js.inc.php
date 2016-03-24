@@ -32,6 +32,10 @@ class Abovethefold_LocalizeJSModule_GoogleAnalyticsGaJs extends Abovethefold_Loc
 
 		parent::__construct( $CTRL );
 
+		$this->options = array_merge(array(
+			'incmethod' => ''
+		),$this->options);
+
 		if ($this->CTRL->options['localizejs'][$this->classname]['enabled']) {
 			switch ($this->CTRL->options['localizejs'][$this->classname]['incmethod']) {
 				default:

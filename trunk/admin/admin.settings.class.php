@@ -9,17 +9,20 @@
 			<div id="post-body" class="metabox-holder">
 				<div id="post-body-content">
 					<div class="postbox">
-						<h3 class="hndle">
-							<span><?php _e( 'Critical Path CSS Settings', 'abovethefold' ); ?></span><a name="criticalcss">&nbsp;</a>
-						</h3>
 						<div class="inside">
 
 							<table class="form-table">
 								<tr valign="top">
-									<th scope="row">Inline CSS<?php if (trim($inlinecss) !== '') { print '<div style="font-size:11px;font-weight:normal;">'.size_format(strlen($inlinecss),2).'</div>'; } ?></th>
+									<th scope="row">Critical Path CSS
+										<?php if (trim($inlinecss) !== '') { print '<div style="font-size:11px;font-weight:normal;">'.size_format(strlen($inlinecss),2).'</div>'; } ?>
+									</th>
 									<td>
+										<p class="description" style="margin-bottom:5px;"><?php _e('Enter the CSS-code to be inserted <strong>inline</strong> into the <code>&lt;head&gt;</code> of the page. <a href="https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery" target="_blank">Click here</a> for the recommendations by Google.', 'abovethefold'); ?></p>
 										<textarea style="width: 100%;height:250px;font-size:11px;" name="abovethefold[css]"><?php echo htmlentities($inlinecss); ?></textarea>
-										<p class="description"><?php _e('Enter the Critical Path CSS-code to be inserted inline into the <code>&lt;head&gt;</code> of the page.', 'abovethefold'); ?></p>
+
+										<a href="https://www.google.com/search?q=beautify+css+online" target="_blank" class="button button-secondary button-small">Beautify</a>
+										<a href="https://www.google.com/search?q=minify+css+online" target="_blank" class="button button-secondary button-small">Minify</a>
+
 									</td>
 								</tr>
 								<tr valign="top">
@@ -32,7 +35,9 @@
 								<tr valign="top" class="cssdeliveryoptions" style="<?php if (isset($options['cssdelivery']) && intval($options['cssdelivery']) !== 1) { print 'display:none;'; } ?>">
 									<td colspan="2">
 
-										<h3 class="hndle"><span>CSS Delivery Optimization</span></h3>
+										<div style="background:#f1f1f1;border:solid 1px #e5e5e5;">
+
+										<h3 class="hndle" style="border-bottom:solid 1px #e5e5e5;"><span>CSS Delivery Optimization</span></h3>
 
 										<div class="inside">
 											<table class="form-table">
@@ -68,6 +73,8 @@
 													</td>
 												</tr>
 											</table>
+										</div>
+
 										</div>
 									</td>
 								</tr>
@@ -110,37 +117,35 @@
 										<p class="description">When enabled, Google fonts found in <code>@import</code> within the CSS-code output of the plugin <a href="https://wordpress.org/plugins/autoptimize/" target="_blank">Autoptimize</a> are included in the optimized delivery by the plugin <a href="https://wordpress.org/plugins/google-webfont-optimizer/">Google Webfont Optimizer</a>. Both plugins need to be installed and active to use this feature.</p>
 									</td>
 								</tr>
-
-
-
 <?php
-	$modules = $this->CTRL->localizejs->get_modules( );
-?>
-
-								<tr valign="top">
-									<th scope="row">
-										Localize Javascript (BETA)
-										<div style="font-size:14px;margin-top:5px;">Please <a href="https://wordpress.org/support/plugin/above-the-fold-optimization" target="_blank">report bugs</a>.</div>
-									</th>
-									<td>
-										<label><input type="checkbox" name="abovethefold[localizejs][enabled]" value="1"<?php if (intval($options['localizejs']['enabled']) === 1) { print ' checked'; } ?> onchange="if (jQuery(this).is(':checked')) { jQuery('.localizejsoptions').show(); } else { jQuery('.localizejsoptions').hide(); }"> Enabled</label>
-										<p class="description">When enabled, recognized external javascript files are stored locally to pass the <code>Leverage browser caching</code>-rule from Google PageSpeed. Custom modules can be added in the theme-directory, /THEME<strong>/abovethefold/localizejs/modulename.inc.php</strong>. Please submit new modules to <a href="mailto:info@optimalisatie.nl?subject=Submission: Above The Fold Javascript Localization Module">info@optimalisatie.nl</a>.</p>
-
-										<div class="localizejsoptions" style="<?php if (intval($options['localizejs']['enabled']) === 1) { } else { print 'display:none;'; } ?>">
-
-<?php
-	foreach ($modules as $module_file) {
-
-		$module = $this->CTRL->localizejs->load_module($module_file);
-		$module->admin_config();
-
+	/**
+	 * Old localizejs enabled setting conversion
+	 *
+	 * @since 2.3.5
+	 */
+	if (!isset($options['localizejs_enabled']) && isset($options['localizejs']) && intval($options['localizejs']['enabled']) === 1) {
+		$options['localizejs_enabled'] = 1;
 	}
 ?>
+								<tr valign="top">
+									<th scope="row">
+										Localize Javascript (BETA)<a name="localizejs">&nbsp;</a>
+									</th>
+									<td>
+										<label><input type="checkbox" name="abovethefold[localizejs_enabled]" value="1"<?php if (intval($options['localizejs_enabled']) === 1) { print ' checked'; } ?> onchange="if (jQuery(this).is(':checked')) { jQuery('.localizejsoptions').show(); } else { jQuery('.localizejsoptions').hide(); }"> Enabled &nbsp;<a href="tools.php?page=abovethefold&amp;tab=localizejs" class="localizejsoptions button button-secondary button-small">Settings</a></label>
+										<p class="description">When enabled, recognized external javascript files are stored locally to pass the <code>Leverage browser caching</code>-rule from Google PageSpeed. </p>
 
 										</div>
 									</td>
 								</tr>
 
+								<tr valign="top">
+									<th scope="row">Admin-bar Test-menu</th>
+									<td>
+                                        <label><input type="checkbox" name="abovethefold[adminbar]" value="1"<?php if (!isset($options['adminbar']) || intval($options['adminbar']) === 1) { print ' checked'; } ?>> Enabled</label>
+                                        <p class="description">Show a <code>PageSpeed</code>-menu in the top admin bar with links to website speed and security tests such as Google PageSpeed Insights. The menu is intended for quick testing of individual pages.</p>
+									</td>
+								</tr>
 								<tr valign="top">
 									<th scope="row">Debug-modus</th>
 									<td>

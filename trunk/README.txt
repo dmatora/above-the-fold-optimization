@@ -64,12 +64,17 @@ To be able to generate Critical Path CSS from within the WordPress admin the sof
 
 == Changelog ==
 
+= 2.3.5 =
+* Bug fixes.
+* Settings link moved to Appearance menu.
+* Added demo code for Grunt.js + Penthouse.js Critical Path CSS generation.
+
 = 2.3.4 =
-* Removed Node modules (Penthouse.js) to reduce plugin size (install via ``npm install``, see instructions)
-* Bugfix LocalizeJS module (@poundnine)
+* Removed Node modules. (Penthouse.js) to reduce plugin size (install via ``npm install``, see instructions)
+* Bugfix LocalizeJS module. (@poundnine)
 
 = 2.3.3 =
-* Bug fixes & improvements (@superpoincare)
+* Bug fixes & improvements. (@superpoincare)
 * Added javascript localization modules.
 
 = 2.3.2 =
@@ -84,13 +89,13 @@ To be able to generate Critical Path CSS from within the WordPress admin the sof
 * Enhanced full-CSS extraction.
 
 = 2.2.1 =
-* Added option to remove CSS files
+* Added option to remove CSS files.
 * CSS extraction bug (old PHP versions).
 
 = 2.2 =
-* Improved admin
-* Online generator instructions
-* Full CSS extraction
+* Improved admin.
+* Online generator instructions.
+* Full CSS extraction.
 
 = 2.1.1 =
 * Addslashes bug.

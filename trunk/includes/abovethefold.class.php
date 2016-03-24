@@ -203,6 +203,12 @@ class Abovethefold {
 
 		$plugin_admin = new Abovethefold_Admin( $this );
 
+		// Hook in the admin styles and scripts
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts',30);
+
+		// Move plugin to be executed first
+		$this->loader->add_action('activated_plugin', $plugin_admin, 'activated_plugin',999999);
+
 		// Hook in the admin options page
 		$this->loader->add_action('admin_menu', $plugin_admin, 'admin_menu',30);
 
@@ -221,7 +227,9 @@ class Abovethefold {
 
 		$plugin_optimization = new Abovethefold_Optimization( $this );
 
-		$this->loader->add_action('init', $plugin_optimization, 'start_buffering',99999);
+		$plugin_optimization->run();
+
+		//$this->loader->add_action('init', $plugin_optimization, 'start_buffering',-99999);
 		$this->loader->add_action('wp_head', $plugin_optimization, 'header', 1);
 		//$this->loader->add_action('wp_foot', $plugin_optimization, 'bufferend', 99999);
 
@@ -335,9 +343,13 @@ class Abovethefold {
 		 * Set default options
 		 */
 		$default_options = array( );
-		$default_options['debug'] = true;
-		$default_options['optimize_css_delivery'] = true;
+		$default_options['debug'] = false;
+		$default_options['adminbar'] = true;
+		$default_options['gwfo'] = false;
+		$default_options['localizejs_enabled'] = false;
+		$default_options['cssdelivery'] = true;
 		$default_options['loadcss_enhanced'] = true;
+		$default_options['cssdelivery_position'] = 'header';
 		$default_options['dimensions'] = '1600x1200, 720x1280, 320x480';
 
 		$options = get_option( 'abovethefold' );

@@ -9,25 +9,25 @@
 
 
 	// Get random post
-	$args = array( 'post_type' => 'post', 'numberposts' => -1 );
+	$args = array( 'post_type' => 'post', 'posts_per_page' => -1 );
 	query_posts($args);
 	if (have_posts()) {
 		$options[] = '<optgroup label="'.__('Posts').'">';
 		while (have_posts()) {
 			the_post();
-			$options[] = '<option value="'.str_replace(get_option('siteurl'),'',get_permalink($post->ID)).'">' . str_replace(get_option('siteurl'),'',get_permalink($post->ID)) . '</option>';
+			$options[] = '<option value="'.str_replace(get_option('siteurl'),'',get_permalink($wp_query->post->ID)).'">' . str_replace(get_option('siteurl'),'',get_permalink($wp_query->post->ID)) . '</option>';
 		}
 		$options[] = '</optgroup>';
 	}
 
 	// Get random page
-	$args = array( 'post_type' => 'page', 'numberposts' => -1 );
+	$args = array( 'post_type' => 'page', 'posts_per_page' => -1 );
 	query_posts($args);
 	if (have_posts()) {
 		$options[] = '<optgroup label="'.__('Pages').'">';
 		while (have_posts()) {
 			the_post();
-			$options[] = '<option value="'.str_replace(get_option('siteurl'),'',get_permalink($post->ID)).'">' . str_replace(get_option('siteurl'),'',get_permalink($post->ID)) . '</option>';
+			$options[] = '<option value="'.str_replace(get_option('siteurl'),'',get_permalink($wp_query->post->ID)).'">' . str_replace(get_option('siteurl'),'',get_permalink($wp_query->post->ID)) . '</option>';
 		}
 		$options[] = '</optgroup>';
 	}
@@ -58,13 +58,13 @@
 						</h3>
 						<div class="inside">
 
-							<p>You can extract the full CSS from any url by adding the query string <code><strong>?extract-css=<?php print md5(SECURE_AUTH_KEY . AUTH_KEY); ?>&amp;output=print</strong></code>.</p>
-							<br />
-							<div>
-								<select id="fullcsspages"><?php print implode('',$options); ?></select>
+							<p>For the creation of Critical Path CSS you need the full CSS of a page. This tool allows you to extract the full CSS from any url and optionally to select the specific CSS files you want to extract.</p>
+							<p>You can quickly output the full CSS of any url by adding the query string <code><strong>?extract-css=<?php print md5(SECURE_AUTH_KEY . AUTH_KEY); ?>&amp;output=print</strong></code>.</p>
+								<div>
+								<select id="fullcsspages"><option value=""></option><?php print implode('',$options); ?></select>
 
-								<button type="button" onclick="document.location.href=jQuery('#fullcsspages').val() + '?extract-css=<?php print md5(SECURE_AUTH_KEY . AUTH_KEY); ?>&output=download';" class="button button-large">Download</button>
-								<button type="button" onclick="window.open(jQuery('#fullcsspages').val() + '?extract-css=<?php print md5(SECURE_AUTH_KEY . AUTH_KEY); ?>&output=print');" class="button button-large">Print</button>
+								<button type="button" onclick="if (jQuery('#fullcsspages').val() === '') { alert('Select a page...'); return; } document.location.href=jQuery('#fullcsspages').val() + '?extract-css=<?php print md5(SECURE_AUTH_KEY . AUTH_KEY); ?>&output=download';" class="button button-large">Download</button>
+								<button type="button" onclick="if (jQuery('#fullcsspages').val() === '') { alert('Select a page...'); return; } window.open(jQuery('#fullcsspages').val() + '?extract-css=<?php print md5(SECURE_AUTH_KEY . AUTH_KEY); ?>&output=print');" class="button button-large">Print</button>
 							</div>
 						</div>
 					</div>

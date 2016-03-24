@@ -6,7 +6,8 @@
     "**/*.txt"
   ],
   "dependencies": {
-    "loadcss": "~0.1.7"
+    "loadcss": "~0.1.7",
+    "selectize": "~0.12.1"
   },
   "devDependencies": {}
 }

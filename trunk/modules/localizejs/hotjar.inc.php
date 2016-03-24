@@ -35,6 +35,10 @@ class Abovethefold_LocalizeJSModule_Hotjar extends Abovethefold_LocalizeJSModule
 
 		parent::__construct( $CTRL );
 
+		$this->options = array_merge(array(
+			'incmethod' => '','id' => '','sv' => ''
+		),$this->options);
+
 		if (isset($this->CTRL->options['localizejs'][$this->classname]['sv'])) {
 			$this->sv = $this->CTRL->options['localizejs'][$this->classname]['sv'];
 		}

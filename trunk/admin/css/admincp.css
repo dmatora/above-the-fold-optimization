@@ -1,0 +1,17 @@
+
+.authorbox .inside {
+    width:45%;
+}
+@media only screen and (max-width: 782px) {
+    .authorbox {
+        margin-bottom:0px;
+    }
+    .authorbox .inside {
+        width:100%;
+        clear:both;
+        padding:0px;
+    }
+    .authorbox .inside>p:last-child {
+        margin: 0.5em 0!important;
+    }
+}

@@ -5,16 +5,15 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		meta: {
-			banner: ''
-				//'/*!\n' +
-				//' * Above the fold Optimization <%= pkg.version %>\n' +
-				//' * @author info@optimalisatie.nl\n' +
-				//' */'
+			banner: '/*!\n' +
+				' * Above the fold Optimization <%= pkg.version %>\n' +
+				' * @author https://optimalisatie.nl\n' +
+				' */'
 		},
 
 		uglify: {
 			options: {
-				banner: '<%= meta.banner %>\n'
+				banner: ''
 			},
 			build: {
 				files: {
@@ -33,10 +32,34 @@ module.exports = function(grunt) {
 					// Original loadCSS
 					'public/js/abovethefold-loadcss.min.js' : [
 						'bower_components/loadcss/loadCSS.js'
+					],
+
+					// Original loadCSS
+					'admin/js/admincp.min.js' : [
+						'bower_components/selectize/dist/js/standalone/selectize.min.js',
+						'admin/js/admincp.js'
 					]
 				}
 			}
-		}
+		},
+
+		cssmin: {
+
+			admincp: {
+				options: {
+					banner: '<%= meta.banner %>\n',
+					advanced: true,
+					aggressiveMerging: true,
+					processImport: true
+				},
+				files: {
+					'admin/css/admincp.min.css': [
+						'admin/css/admincp.css',
+						'bower_components/selectize/dist/css/selectize.default.css'
+					]
+				}
+			}
+		},
 	});
 
 	// Load Dependencies

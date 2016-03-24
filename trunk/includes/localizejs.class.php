@@ -74,7 +74,16 @@ class Abovethefold_LocalizeJS {
 			$this->curl = 'file_get_contents';
 		}
 
-		if (is_admin() || (isset($this->options['localizejs']['enabled']) && intval($this->options['localizejs']['enabled']) === 1)) {
+		/**
+		 * Old localizejs enabled setting conversion
+		 *
+		 * @since 2.3.5
+		 */
+		if (!isset($this->options['localizejs_enabled']) && isset($this->options['localizejs']) && intval($this->options['localizejs']['enabled']) === 1) {
+			$this->options['localizejs_enabled'] = 1;
+		}
+
+		if (is_admin() || (isset($this->options['localizejs_enabled']) && intval($this->options['localizejs_enabled']) === 1)) {
 			$this->load_modules( );
 		}
 

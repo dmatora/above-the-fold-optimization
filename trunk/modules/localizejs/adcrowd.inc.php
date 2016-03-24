@@ -34,6 +34,10 @@ class Abovethefold_LocalizeJSModule_Adcrowd extends Abovethefold_LocalizeJSModul
 
 		parent::__construct( $CTRL );
 
+		$this->options = array_merge(array(
+			'incmethod' => '','id' => ''
+		),$this->options);
+
 		if (isset($this->CTRL->options['localizejs'][$this->classname]['id'])) {
 			$this->id = $this->CTRL->options['localizejs'][$this->classname]['id'];
 		}
