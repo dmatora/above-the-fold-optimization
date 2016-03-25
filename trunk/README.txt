@@ -1,9 +1,9 @@
 === Above The Fold Optimization ===
 Contributors: optimalisatie
-Donate link: https://en.optimalisatie.nl/
+Donate link: https://optimalisatie.nl/
 Tags: optimization, above the fold, critical path, css, localization, javascript, minification, minify, minify css, minify stylesheet, optimize, speed, stylesheet, pagespeed, google pagespeed
 Requires at least: 3.0.1
-Tested up to: 4.4.4
+Tested up to: 4.4.2
 Stable tag: 4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -63,6 +63,18 @@ To be able to generate Critical Path CSS from within the WordPress admin the sof
 3. Full CSS extraction
 
 == Changelog ==
+
+= 2.3.9 =
+* Caching bug fix (causing problems since v2.3.5).
+
+= 2.3.8 =
+* Bug fix (re-order of plugin execution for correct ob_start stack).
+
+= 2.3.7 =
+* Added CSS render delay option.
+
+= 2.3.6 =
+* Added javascript header comments for version/cache related debugging.
 
 = 2.3.5 =
 * Bug fixes.

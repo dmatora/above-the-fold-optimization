@@ -49,6 +49,19 @@
 													</td>
 												</tr>
 												<tr valign="top">
+													<th scope="row">CSS render-delay</th>
+													<td>
+														<table cellpadding="0" cellspacing="0" border="0">
+															<tr>
+																<td valign="top" style="padding:0px;vertical-align:top;"><input type="number" min="0" max="3000" step="1" name="abovethefold[cssdelivery_renderdelay]" size="10" value="<?php print ((empty($options['cssdelivery_renderdelay']) || $options['cssdelivery_renderdelay'] === 0) ? '' : htmlentities($options['cssdelivery_renderdelay'],ENT_COMPAT,'utf-8')); ?>" onkeyup="if (jQuery(this).val() !== '' && jQuery(this).val() !== '0') { jQuery('#warnrenderdelay').show(); } else { jQuery('#warnrenderdelay').hide(); }" onchange="if (jQuery(this).val() === '0') { jQuery(this).val(''); } if (jQuery(this).val() !== '' && jQuery(this).val() !== '0') { jQuery('#warnrenderdelay').show(); } else { jQuery('#warnrenderdelay').hide(); }" placeholder="0 ms" /></td>
+																<td valign="top" style="padding:0px;vertical-align:top;padding-left:10px;font-size:11px;"><div id="warnrenderdelay" style="padding:0px;margin:0px;<?php print ((empty($options['cssdelivery_renderdelay']) || $options['cssdelivery_renderdelay'] === 0 || trim($options['cssdelivery_renderdelay']) === '') ? 'display:none;' : ''); ?>"><span style="color:red;font-weight:bold;">Warning:</span> Although a higher PageSpeed score can be achieved using this option, it may not be beneficial to the page rendering experience of your users. Often it is best to seek an alternative solution to pass the rule.</div></td>
+															</tr>
+														</table>
+														<p class="description" style="clear:both;">Optionally, enter a time in microseconds to delay the rendering of CSS files. This option allows for fine tuning to the break point of the <code>Eliminate render-blocking JavaScript and CSS in above-the-fold content</code>-rule.</p>
+
+													</td>
+												</tr>
+												<tr valign="top">
 													<th scope="row">Position</th>
 													<td>
 														<select name="abovethefold[cssdelivery_position]">

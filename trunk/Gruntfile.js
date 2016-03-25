@@ -5,23 +5,19 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		meta: {
-			banner: '/*!\n' +
-				' * Above the fold Optimization <%= pkg.version %>\n' +
-				' * @author https://optimalisatie.nl\n' +
-				' */'
+			banner: '/*! Above the fold Optimization v<%= pkg.version %> */'
 		},
 
 		uglify: {
 			options: {
-				banner: ''
+				banner: '<%= meta.banner %>\n'
 			},
 			build: {
 				files: {
 
 					// Above The Fold Javascript Controller
 					'public/js/abovethefold.min.js' : [
-						'public/js/src/abovethefold.js',
-						'public/js/src/abovethefold.loadcss.js'
+						'public/js/src/abovethefold.js'
 					],
 
 					// Enhanced loadCSS
@@ -31,7 +27,8 @@ module.exports = function(grunt) {
 
 					// Original loadCSS
 					'public/js/abovethefold-loadcss.min.js' : [
-						'bower_components/loadcss/loadCSS.js'
+						'bower_components/loadcss/loadCSS.js',
+						'public/js/src/abovethefold.loadcss.js'
 					],
 
 					// Original loadCSS
@@ -65,5 +62,5 @@ module.exports = function(grunt) {
 	// Load Dependencies
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-    grunt.registerTask( 'default', [ 'uglify' ] );
+	grunt.registerTask( 'default', [ 'uglify' ] );
 };

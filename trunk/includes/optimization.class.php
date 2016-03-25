@@ -33,6 +33,16 @@ class Abovethefold_Optimization {
 	public $buffertype;
 
 	/**
+	 * CSS buffer started
+	 */
+	public $css_buffer_started = false;
+
+	/**
+	 * Critical CSS replacement string
+	 */
+	public $criticalcss_replacement_string = '++|CRITICALCSS|++';
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0
@@ -45,17 +55,6 @@ class Abovethefold_Optimization {
 	}
 
 	/**
-	 * Runtime execution
-	 *
-	 * @since    2.3.5
-	 */
-	public function run( ) {
-
-		$this->start_buffering();
-
-	}
-
-	/**
 	 * Init output buffering
 	 *
 	 * @since    2.0
@@ -63,6 +62,12 @@ class Abovethefold_Optimization {
 	public function start_buffering( ) {
 
 		if ($this->CTRL->extractcss) {
+
+			if ($this->css_buffer_started) {
+				return;
+			}
+
+			$this->css_buffer_started = true;
 
 			ob_start(array($this, 'end_cssextract_buffering'));
 
@@ -81,7 +86,6 @@ class Abovethefold_Optimization {
 			}
 		} else {
 			ob_start(array($this, 'end_buffering'));
-
 		}
 	}
 
@@ -203,8 +207,8 @@ class Abovethefold_Optimization {
 			$styles[] = $link;
 		}
 
-		$search[] = '|var CRITICALCSS;|Ui';
-		$replace[] = 'var CRITICALCSS = '.json_encode($styles).';';
+		$search[] = '#[\'|"]'.preg_quote($this->criticalcss_replacement_string).'[\'|"]#Ui';
+		$replace[] = json_encode($styles, JSON_UNESCAPED_SLASHES);
 
 		$buffer = preg_replace($search,$replace,$buffer);
 
@@ -383,7 +387,7 @@ class Abovethefold_Optimization {
 			}
 			$reflog[$hash] = 1;
 
-			if (strpos($code,'* Above The Fold Optimization') !== false) {
+			if (strpos($code,'! Above The Fold Optimization') !== false) {
 				continue 1;
 			}
 
@@ -506,17 +510,25 @@ function human_filesize($bytes, $decimals = 2) {
 			$jscode .= ' ' . file_get_contents($file);
 		}
 
+		$jssettings = array(
+			'css' => $this->criticalcss_replacement_string
+		);
+
+		if (isset($this->CTRL->options['cssdelivery_renderdelay']) && intval($this->CTRL->options['cssdelivery_renderdelay']) > 0) {
+			$jssettings['delay'] = intval($this->CTRL->options['cssdelivery_renderdelay']);
+		}
+
 ?>
 <style type="text/css">
-/*!
- * Above The Fold Optimization <?php print $this->CTRL->get_version() . "\n"; ?>
- * (c) 2015 https://optimalisatie.nl
- */
+/*! Above The Fold Optimization <?php print $this->CTRL->get_version(); ?> */
 <?php if (file_exists($cssfile)) { print file_get_contents($cssfile); } ?></style>
-<script type="text/javascript" id="atfcss"><?php print $jscode; ?> var CRITICALCSS;
+<script type="text/javascript" id="atfcss"><?php print $jscode; ?>
 <?php if (current_user_can( 'manage_options' ) && intval($this->CTRL->options['debug']) === 1) { print 'window.abovethefold.debug = true;'; }
+if (!empty($jssettings)) {
+	print "window['abovethefold'].config(".json_encode($jssettings).");";
+}
 if ($this->CTRL->options['cssdelivery_position'] === 'header') {
-	print "if (window['abovethefold']) { window['abovethefold'].css(CRITICALCSS); }";
+	print "window['abovethefold'].css();";
 }
 ?>
 </script>
@@ -534,7 +546,7 @@ if ($this->CTRL->options['cssdelivery_position'] === 'header') {
 		if ($this->OPTIMIZE->noop) { return; }
 
 		if (empty($this->CTRL->options['cssdelivery_position']) || $this->CTRL->options['cssdelivery_position'] === 'footer') {
-        	print "<script type=\"text/javascript\">if (window['abovethefold']) { window['abovethefold'].css(CRITICALCSS); }</script>";
+        	print "<script type=\"text/javascript\">if (window['abovethefold']) { window['abovethefold'].css(); }</script>";
         }
 
 	}
@@ -543,7 +555,7 @@ if ($this->CTRL->options['cssdelivery_position'] === 'header') {
 	 * Skip autoptimize CSS
 	 */
 	public function autoptimize_skip_css($excludeCSS) {
-		$excludeCSS .= ',* Above The Fold Optimization,';
+		$excludeCSS .= ',! Above The Fold Optimization,';
 		return $excludeCSS;
 	}
 
@@ -551,7 +563,7 @@ if ($this->CTRL->options['cssdelivery_position'] === 'header') {
 	 * Skip autoptimize Javascript
 	 */
 	public function autoptimize_skip_js($excludeJS) {
-		$excludeJS .= ',css(CRITICALCSS),var CRITICALCSS';
+		$excludeJS .= ',abovethefold\'].css(),' . $this->criticalcss_replacement_string;
 
 		if ($this->CTRL->options['gwfo']) {
 			$excludeJS .= ',WebFontConfig';

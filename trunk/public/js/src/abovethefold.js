@@ -11,13 +11,25 @@
 window['abovethefold'] = {
 
     debug: false,
+    cnf: {},
+
+    /**
+     * Set configuration
+     *
+     * @param cnf
+     */
+    config: function(cnf) {
+        this.cnf = cnf;
+    },
 
     /**
      * Load CSS asynchronicly
      *
      * @link https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
      */
-    css: function(files) {
+    css: function() {
+
+        var files = this.cnf.css;
 
         if (this.debug) {
             if (!files) {

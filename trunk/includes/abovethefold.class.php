@@ -207,7 +207,10 @@ class Abovethefold {
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts',30);
 
 		// Move plugin to be executed first
-		$this->loader->add_action('activated_plugin', $plugin_admin, 'activated_plugin',999999);
+		//$this->loader->add_action('activated_plugin', $plugin_admin, 'update_active_plugins',999999);
+
+		// Move plugin to be executed first
+		//$this->loader->add_action('plugins_loaded', $plugin_admin, 'update_active_plugins',999999);
 
 		// Hook in the admin options page
 		$this->loader->add_action('admin_menu', $plugin_admin, 'admin_menu',30);
@@ -227,11 +230,8 @@ class Abovethefold {
 
 		$plugin_optimization = new Abovethefold_Optimization( $this );
 
-		$plugin_optimization->run();
-
-		//$this->loader->add_action('init', $plugin_optimization, 'start_buffering',-99999);
+		$this->loader->add_action('init', $plugin_optimization, 'start_buffering',99999);
 		$this->loader->add_action('wp_head', $plugin_optimization, 'header', 1);
-		//$this->loader->add_action('wp_foot', $plugin_optimization, 'bufferend', 99999);
 
 		$this->loader->add_action('wp_print_footer_scripts', $plugin_optimization, 'footer',99999);
 

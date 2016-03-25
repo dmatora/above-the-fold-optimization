@@ -126,7 +126,7 @@ class Abovethefold_Admin {
 	public function admin_bar($admin_bar) {
 
 		$options = get_option('abovethefold');
-		if (empty($options['adminbar']) || intval($options['adminbar']) !== 1) {
+		if (!empty($options['adminbar']) && intval($options['adminbar']) !== 1) {
 			return;
 		}
 
@@ -168,6 +168,15 @@ class Abovethefold_Admin {
 			'href' => 'https://www.google.com/webmasters/tools/mobile-friendly/?url='.urlencode($currenturl).'',
 			'meta' => array( 'title' => __( 'Google Mobile', 'abovethefold' ), 'target' => '_blank' )
 		) );
+		$admin_bar->add_node( array(
+			'parent' => 'abovethefold',
+			'id' => 'abovethefold-check-google-malware',
+			'title' => __( 'Google Malware & Security', 'abovethefold' ),
+			'href' => 'https://www.google.com/transparencyreport/safebrowsing/diagnostic/index.html#url='.urlencode(str_replace('www.','',parse_url($currenturl, PHP_URL_HOST))),
+			'meta' => array( 'title' => __( 'Google Malware & Security', 'abovethefold' ), 'target' => '_blank' )
+		) );
+
+		//
 		$admin_bar->add_node( array(
 			'parent' => 'abovethefold',
 			'id' => 'abovethefold-check-pingdom',
@@ -245,6 +254,7 @@ class Abovethefold_Admin {
 		$options['debug'] = (isset($input['debug']) && intval($input['debug']) === 1) ? true : false;
 		$options['adminbar'] = (isset($input['adminbar']) && intval($input['adminbar']) === 1) ? true : false;
 		$options['localizejs_enabled'] = (isset($input['localizejs_enabled']) && intval($input['localizejs_enabled']) === 1) ? true : false;
+		$options['cssdelivery_renderdelay'] = (isset($input['cssdelivery_renderdelay']) && is_numeric($input['cssdelivery_renderdelay']) && intval($input['cssdelivery_renderdelay']) > 0) ? intval($input['cssdelivery_renderdelay']) : false;
 
 		$css = trim(sanitize_text_field(stripslashes($input['css'])));
 
@@ -671,18 +681,19 @@ class Abovethefold_Admin {
 	 * @since     2.3.5
 	 * @return    string    The version number of the plugin.
 	 */
-	public function activated_plugin($plugin, $network_activation) {
+	/*public function update_active_plugins() {
 
-		$path = str_replace( WP_PLUGIN_DIR . '/', '', __FILE__ );
+		$this_plugin = 'above-the-fold-optimization/abovethefold.php';
 		if ( $plugins = get_option( 'active_plugins' ) ) {
-			if ( $key = array_search( $path, $plugins ) ) {
+			$key = array_search( $this_plugin, $plugins );
+			if ( $key > 0 ) {
 				array_splice( $plugins, $key, 1 );
-				array_unshift( $plugins, $path );
+				array_unshift( $plugins, $this_plugin );
 				update_option( 'active_plugins', $plugins );
 			}
 		}
 
-	}
+	}*/
 
 
 
