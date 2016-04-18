@@ -166,7 +166,11 @@ class Abovethefold_CleanCSS {
 			}
 
 			// Delete tmpfiles
-			array_map('unlink', $tmpfiles);
+			foreach($tmpfiles as $tmpfile) {
+				if (file_exists($tmpfile)) {
+					unlink($tmpfile);
+				}
+			}
 
 			return $res;
 		}

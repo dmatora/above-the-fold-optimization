@@ -301,7 +301,11 @@ class Abovethefold_Generator_Penthouse {
 			}
 
 			// Delete tmpfiles for inline code
-			array_map('unlink', $tmpfiles);
+			foreach($tmpfiles as $tmpfile) {
+				if (file_exists($tmpfile)) {
+					unlink($tmpfile);
+				}
+			}
 
 			return $criticalCSS;
 		}
